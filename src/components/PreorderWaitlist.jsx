@@ -119,7 +119,7 @@ export default function PreorderWaitlist() {
                 <p className="text-zinc-300 font-medium">{model?.name}</p>
                 <p className="text-zinc-400 text-sm">{model?.subtitle}</p>
               </div>
-              <p className="text-zinc-200">${'{'}new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(model?.price ?? 0){'}'}</p>
+              <p className="text-zinc-200">{new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(model?.price ?? 0)}</p>
             </div>
             <div className="mt-4 flex gap-3">
               <select value={modelId} onChange={(e) => setModelId(e.target.value)} className="bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-zinc-100">
@@ -131,7 +131,7 @@ export default function PreorderWaitlist() {
             </div>
             <div className="mt-4 flex items-center justify-between">
               <p className="text-zinc-400 text-sm">Estimated total</p>
-              <p className="text-zinc-100 text-lg">${'{'}new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(total){'}'}</p>
+              <p className="text-zinc-100 text-lg">{new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(total)}</p>
             </div>
           </div>
         </div>
