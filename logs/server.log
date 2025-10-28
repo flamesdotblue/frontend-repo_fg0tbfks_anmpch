@@ -1,0 +1,57 @@
+
+> vibe-generated-app@1.0.0 dev
+> vite
+
+
+  VITE v5.4.20  ready in 216 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: http://172.20.23.64:3000/
+9:20:01 AM [vite] Pre-transform error: Transform failed with 1 error:
+/home/workspace/src/components/PreorderWaitlist.jsx:122:89: ERROR: Expected "}" but found ":"
+9:20:02 AM [vite] Internal server error: Transform failed with 1 error:
+/home/workspace/src/components/PreorderWaitlist.jsx:122:89: ERROR: Expected "}" but found ":"
+  Plugin: vite:esbuild
+  File: /home/workspace/src/components/PreorderWaitlist.jsx:122:89
+  
+  Expected "}" but found ":"
+  120|                  <p className="text-zinc-400 text-sm">{model?.subtitle}</p>
+  121|                </div>
+  122|                <p className="text-zinc-200">${'{'}new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(model?.price ?? 0){'}'}</p>
+     |                                                                                           ^
+  123|              </div>
+  124|              <div className="mt-4 flex gap-3">
+  
+      at failureErrorWithLog (/home/workspace/node_modules/esbuild/lib/main.js:1472:15)
+      at /home/workspace/node_modules/esbuild/lib/main.js:755:50
+      at responseCallbacks.<computed> (/home/workspace/node_modules/esbuild/lib/main.js:622:9)
+      at handleIncomingPacket (/home/workspace/node_modules/esbuild/lib/main.js:677:12)
+      at Socket.readFromStdout (/home/workspace/node_modules/esbuild/lib/main.js:600:7)
+      at Socket.emit (node:events:508:28)
+      at addChunk (node:internal/streams/readable:559:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+      at Readable.push (node:internal/streams/readable:390:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+9:20:08 AM [vite] Internal server error: Transform failed with 1 error:
+/home/workspace/src/components/PreorderWaitlist.jsx:122:89: ERROR: Expected "}" but found ":"
+  Plugin: vite:esbuild
+  File: /home/workspace/src/components/PreorderWaitlist.jsx:122:89
+  
+  Expected "}" but found ":"
+  120|                  <p className="text-zinc-400 text-sm">{model?.subtitle}</p>
+  121|                </div>
+  122|                <p className="text-zinc-200">${'{'}new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(model?.price ?? 0){'}'}</p>
+     |                                                                                           ^
+  123|              </div>
+  124|              <div className="mt-4 flex gap-3">
+  
+      at failureErrorWithLog (/home/workspace/node_modules/esbuild/lib/main.js:1472:15)
+      at /home/workspace/node_modules/esbuild/lib/main.js:755:50
+      at responseCallbacks.<computed> (/home/workspace/node_modules/esbuild/lib/main.js:622:9)
+      at handleIncomingPacket (/home/workspace/node_modules/esbuild/lib/main.js:677:12)
+      at Socket.readFromStdout (/home/workspace/node_modules/esbuild/lib/main.js:600:7)
+      at Socket.emit (node:events:508:28)
+      at addChunk (node:internal/streams/readable:559:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+      at Readable.push (node:internal/streams/readable:390:5)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
