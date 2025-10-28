@@ -28,15 +28,11 @@ export default function PreorderWaitlist() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Google Analytics event if available
-    try {
-      window.gtag && window.gtag('event', 'preorder_submit', { model: modelId, qty });
-    } catch {}
+    try { window.gtag && window.gtag('event', 'preorder_submit', { model: modelId, qty }); } catch {}
 
     const mailchimpURL = import.meta.env.VITE_MAILCHIMP_URL; // Expect full form POST URL
 
     if (mailchimpURL) {
-      // Create a hidden form submission (Mailchimp embedded form style) using a temporary form
       const form = document.createElement('form');
       form.action = mailchimpURL;
       form.method = 'POST';
@@ -45,7 +41,7 @@ export default function PreorderWaitlist() {
       const fields = {
         EMAIL: email,
         FNAME: name,
-        MMERGE6: model?.name ?? '', // Custom field example for model
+        MMERGE6: model?.name ?? '',
         MMERGE7: String(qty),
         MMERGE8: address,
       };
@@ -74,7 +70,6 @@ export default function PreorderWaitlist() {
       return;
     }
 
-    // Fallback: store locally to export
     const entry = {
       id: crypto.randomUUID(),
       modelId,
@@ -100,7 +95,7 @@ export default function PreorderWaitlist() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'MaisonVera_Preorders.json';
+    a.download = 'MaisonVera_Waitlist.json';
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -109,9 +104,9 @@ export default function PreorderWaitlist() {
     <section id="shop" className="bg-zinc-950 py-20">
       <div className="mx-auto max-w-6xl px-6 grid md:grid-cols-2 gap-10 items-start">
         <div>
-          <p className="tracking-widest uppercase text-xs text-zinc-400">Shop / Pre‑Order</p>
-          <h2 className="mt-2 text-3xl md:text-4xl font-semibold text-zinc-100">Reserve your Maison Vera</h2>
-          <p className="mt-3 text-zinc-400">A small refundable deposit secures your build slot. You will be notified via email with your delivery window and checkout invitation when your watch is ready.</p>
+          <p className="tracking-widest uppercase text-xs text-zinc-400">Waitlist</p>
+          <h2 className="mt-2 text-3xl md:text-4xl font-semibold text-zinc-100">Reserve your bottle</h2>
+          <p className="mt-3 text-zinc-400">Add your details to secure early access to our first batch. We’ll email you a private checkout link as soon as your chosen scent is ready.</p>
 
           <div className="mt-6 rounded-2xl bg-zinc-900/40 ring-1 ring-white/10 p-6">
             <div className="flex items-center justify-between">
@@ -136,7 +131,7 @@ export default function PreorderWaitlist() {
           </div>
         </div>
         <form id="preorder" onSubmit={handleSubmit} className="rounded-2xl bg-zinc-900/40 ring-1 ring-white/10 p-6">
-          <h3 className="text-zinc-100 text-xl font-medium">Checkout Details</h3>
+          <h3 className="text-zinc-100 text-xl font-medium">Your details</h3>
           <div className="mt-4 grid grid-cols-1 gap-4">
             <div>
               <label className="block text-sm text-zinc-400 mb-1">Full name</label>
@@ -147,17 +142,17 @@ export default function PreorderWaitlist() {
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="you@example.com" className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-zinc-100" />
             </div>
             <div>
-              <label className="block text-sm text-zinc-400 mb-1">Shipping address (city, country)</label>
+              <label className="block text-sm text-zinc-400 mb-1">City, Country</label>
               <input value={address} onChange={(e) => setAddress(e.target.value)} placeholder="City, Country" className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-zinc-100" />
             </div>
           </div>
-          <button type="submit" className="mt-4 w-full px-4 py-2 rounded-lg bg-zinc-100 text-black hover:bg-white transition">Place pre‑order</button>
+          <button type="submit" className="mt-4 w-full px-4 py-2 rounded-lg bg-zinc-100 text-black hover:bg-white transition">Join waitlist</button>
           {status === 'success' && (
-            <p className="mt-3 text-emerald-400 text-sm">Pre‑order received. Check your inbox for a confirmation email.</p>
+            <p className="mt-3 text-emerald-400 text-sm">Thank you — you’re on the list. Watch your inbox for next steps.</p>
           )}
           {status === 'success-local' && (
             <div className="mt-3 text-zinc-300 text-sm">
-              <p>Pre‑order captured locally. Set VITE_MAILCHIMP_URL to send submissions to your Mailchimp audience.</p>
+              <p>Captured locally. Set VITE_MAILCHIMP_URL to send submissions to your Mailchimp audience.</p>
               <button type="button" onClick={exportLocal} className="mt-2 px-3 py-1.5 rounded-md border border-zinc-600 text-zinc-100 hover:border-zinc-400">Export JSON</button>
             </div>
           )}

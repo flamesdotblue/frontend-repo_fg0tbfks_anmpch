@@ -3,33 +3,33 @@ import React, { useMemo, useState } from 'react';
 const MODELS = [
   {
     id: 'mv01',
-    name: 'Vera One',
-    subtitle: '40mm • Automatic • 200m',
-    price: 1290,
-    finish: 'Brushed Steel / Obsidian Black',
+    name: 'Édition Noire',
+    subtitle: 'Extrait de Parfum • 50ml',
+    price: 240,
+    finish: 'Black currant, smoked cedar, ambrette',
     description:
-      'Our signature daily timepiece. A balanced 40mm case, Swiss‑inspired automatic movement, and a deep sunburst dial under sapphire crystal.',
-    specs: ['40mm case', 'Sapphire crystal', '200m water resistance', 'Automatic movement', 'Stainless bracelet'],
+      'Shadowy and restrained. A velvet opening of black currant moves into cool florals and a hush of smoked cedar. Intimate sillage, lingering depth.',
+    specs: ['Extrait concentration', '50ml refillable flacon', 'Cold-filtered, 8-week maceration', 'Vegan, IFRA compliant'],
   },
   {
     id: 'mv02',
-    name: 'Vera Eclipse',
-    subtitle: '38mm • Hand‑Wound • 50m',
-    price: 1490,
-    finish: 'Polished Steel / Midnight Blue',
+    name: 'Lumière Irisée',
+    subtitle: 'Eau de Parfum • 50ml',
+    price: 220,
+    finish: 'Iris pallida, pear skin, cashmere musk',
     description:
-      'For purists who savor the ritual. A slim hand‑wound caliber in a refined 38mm case, complemented by a deep midnight dial.',
-    specs: ['38mm case', 'Box sapphire', '50m water resistance', 'Hand‑wound movement', 'Leather strap'],
+      'A soft prism of light. The powdery elegance of iris meets dewy pear and a tender cashmere trail. Clean, luminous, undeniably modern.',
+    specs: ['Eau de Parfum', '50ml refillable flacon', 'Iris butter from Tuscany', 'No artificial colors'],
   },
   {
     id: 'mv03',
-    name: 'Vera Expedition',
-    subtitle: '41mm • Automatic GMT • 100m',
-    price: 1790,
-    finish: 'Bead‑Blasted / Charcoal',
+    name: 'Cuir Serein',
+    subtitle: 'Parfum • 50ml',
+    price: 260,
+    finish: 'Suede leather, tea, palo santo',
     description:
-      'Engineered for journeys. A true traveler’s GMT with independent hour hand, legible indices, and toolish bead‑blasted case.',
-    specs: ['41mm case', 'AR sapphire', '100m water resistance', 'Automatic GMT', 'Hybrid rubber strap'],
+      'Weightless leather. A calm blend of suede and pale woods, lifted by tea leaves and palo santo smoke. Serene, enveloping, genderless.',
+    specs: ['Parfum strength', '50ml refillable flacon', 'Responsible sandalwood', 'Hand-bottled in small batches'],
   },
 ];
 
@@ -37,21 +37,17 @@ function Currency({ amount }) {
   return <span>{new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(amount)}</span>;
 }
 
-function ModelCard({ model, onPreorder }) {
+function ModelCard({ model, onSelect, onPreorder }) {
   return (
     <div className="group rounded-2xl bg-zinc-900/40 ring-1 ring-white/10 p-6 hover:ring-white/20 transition">
-      <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-zinc-800 to-black overflow-hidden relative">
-        {/* Procedural dial preview */}
-        <div className="absolute inset-0" aria-hidden>
-          <div className="absolute inset-0 opacity-60" style={{
-            background: 'radial-gradient(120% 120% at 50% 10%, rgba(255,255,255,0.12) 0%, rgba(0,0,0,0) 40%), radial-gradient(90% 90% at 50% 60%, rgba(120,120,140,0.25) 0%, rgba(0,0,0,0) 60%)'
+      <div className="aspect-[4/3] rounded-xl overflow-hidden relative bg-gradient-to-br from-[#1a151f] to-black">
+        {/* Minimal bottle silhouette */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-90" aria-hidden>
+          <div className="h-44 w-32 md:h-56 md:w-40 rounded-xl" style={{
+            background: 'linear-gradient(160deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02))',
+            boxShadow: 'inset 0 0 30px rgba(255,255,255,0.08), 0 30px 60px rgba(0,0,0,0.45)'
           }} />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="h-40 w-40 md:h-48 md:w-48 rounded-full" style={{
-              background: 'radial-gradient(circle at 40% 40%, #2a2d34 0%, #0f1116 60%, #07080b 100%)',
-              boxShadow: 'inset 0 0 20px rgba(255,255,255,0.08), 0 30px 60px rgba(0,0,0,0.5)'
-            }} />
-          </div>
+          <div className="absolute -inset-10 bg-[radial-gradient(120%_120%_at_50%_0%,rgba(200,160,255,0.18),rgba(0,0,0,0)_50%)]" />
         </div>
       </div>
       <div className="mt-4">
@@ -66,8 +62,8 @@ function ModelCard({ model, onPreorder }) {
           {model.specs.map((s) => (<li key={s}>{s}</li>))}
         </ul>
         <div className="mt-4 flex gap-2">
-          <a href={`#product-${model.id}`} className="px-4 py-2 rounded-full border border-zinc-600 text-zinc-100 hover:border-zinc-400 transition">View details</a>
-          <button onClick={() => onPreorder(model)} className="px-4 py-2 rounded-full bg-zinc-100 text-black hover:bg-white transition">Pre‑order</button>
+          <button onClick={() => onSelect(model)} className="px-4 py-2 rounded-full border border-zinc-600 text-zinc-100 hover:border-zinc-400 transition">Notes & details</button>
+          <button onClick={() => onPreorder(model)} className="px-4 py-2 rounded-full bg-zinc-100 text-black hover:bg-white transition">Join waitlist</button>
         </div>
       </div>
     </div>
@@ -75,13 +71,18 @@ function ModelCard({ model, onPreorder }) {
 }
 
 function ProductDetail({ model, onClose }) {
-  const specPairs = useMemo(() => model.specs.map((s, i) => ({ k: s.split(' ')[0], v: s })), [model]);
+  const specPairs = useMemo(() => model.specs.map((s) => ({ k: s.split(' ')[0], v: s })), [model]);
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
       <div className="max-w-3xl w-full rounded-2xl bg-zinc-900 ring-1 ring-white/10 overflow-hidden" onClick={(e) => e.stopPropagation()} id={`product-${model.id}`}>
         <div className="grid md:grid-cols-2">
           <div className="bg-gradient-to-br from-zinc-800 to-black p-6">
-            <div className="aspect-square rounded-xl bg-black/30 ring-1 ring-white/10" />
+            <div className="aspect-square rounded-xl bg-[radial-gradient(90%_90%_at_50%_30%,rgba(200,160,255,0.18),rgba(0,0,0,0)_60%)] ring-1 ring-white/10 flex items-center justify-center">
+              <div className="h-48 w-36 rounded-xl" style={{
+                background: 'linear-gradient(160deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02))',
+                boxShadow: 'inset 0 0 30px rgba(255,255,255,0.08), 0 30px 60px rgba(0,0,0,0.45)'
+              }} />
+            </div>
           </div>
           <div className="p-6">
             <div className="flex items-start justify-between gap-4">
@@ -101,7 +102,7 @@ function ProductDetail({ model, onClose }) {
               ))}
             </div>
             <div className="mt-6 flex gap-3">
-              <a href="#shop" className="px-4 py-2 rounded-full bg-zinc-100 text-black hover:bg-white transition">Pre‑order</a>
+              <a href="#shop" className="px-4 py-2 rounded-full bg-zinc-100 text-black hover:bg-white transition">Join waitlist</a>
               <a href="#contact" className="px-4 py-2 rounded-full border border-zinc-600 text-zinc-100 hover:border-zinc-400 transition">Ask a question</a>
             </div>
           </div>
@@ -113,10 +114,8 @@ function ProductDetail({ model, onClose }) {
 
 export default function ProductShowcase() {
   const [selected, setSelected] = useState(null);
-  const [preorder, setPreorder] = useState(null);
 
   const handlePreorder = (m) => {
-    setPreorder(m);
     const el = document.getElementById('preorder');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
@@ -127,12 +126,12 @@ export default function ProductShowcase() {
         <div className="flex items-end justify-between">
           <div>
             <p className="tracking-widest uppercase text-xs text-zinc-400">Collection</p>
-            <h2 className="mt-2 text-3xl md:text-4xl font-semibold text-zinc-100">The Maison Vera Lineup</h2>
+            <h2 className="mt-2 text-3xl md:text-4xl font-semibold text-zinc-100">Eaux that whisper</h2>
           </div>
         </div>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           {MODELS.map((m) => (
-            <ModelCard key={m.id} model={m} onPreorder={(mm) => handlePreorder(mm)} />
+            <ModelCard key={m.id} model={m} onSelect={(mm) => setSelected(mm)} onPreorder={(mm) => handlePreorder(mm)} />
           ))}
         </div>
         {selected && (
